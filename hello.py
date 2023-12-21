@@ -1,5 +1,4 @@
-from flask import Flask, render_template
-
+from flask import Flask, render_template, request
 
 ######
 
@@ -28,9 +27,12 @@ ping()
 
 @app.route("/hello/<name>")
 def hello(name):
+
     # return ("Hello" + name)
+
     return (f"Hello {name}")
 
 @app.route("/testImg")
 def testImg():
+
     return ("img src=\"https://s3.amazonaws.com/static.rogerebert.com/uploads/review/primary_image/reviews/reality-movie-review-2023/reality-movie-review-2023.jpeg\" alt=\"reality\"")
