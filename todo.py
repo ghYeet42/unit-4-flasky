@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 
 
 todolist = ["sleep", "scoot", "griddy"]
@@ -12,13 +12,23 @@ app = Flask(__name__)
 @app.route("/", methods = ["GET", "POST"])
 def index():
 
-    newTodo = request.form["newTodo"]
+    if request.method == "POST":
 
-    todolist.append(newTodo)
+        newTodo = request.form["new2do"]
 
-    return render_template ("todo.html.jinja", my2dolist = todolist )
+        todolist.append(newTodo)
+
+
+    return render_template ("todo.html.jinja", my2dolist = todolist)
     
-
     return ("This my 2dos...!")
 
     # return ("<p style=\"color:red;\">Hello!</p>")
+
+
+@app.route("/delete/<int:todoIndex>", methods = ["POST"])
+def todoDel(todoIndex):
+
+    del todolist[todoIndex]
+
+    return redirect("/")
