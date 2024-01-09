@@ -25,9 +25,11 @@ def index():
 
     cursor = con.cursor()
 
-    cursor.execute("SELECT `description` FROM `todosah`")
+    cursor.execute("SELECT * FROM `todosah`")
 
     results = cursor.fetchall()
+
+    cursor.close()
 
     print(results)
 
@@ -36,6 +38,14 @@ def index():
         newTodo = request.form["new2do"]
 
         todolist.append(newTodo)
+
+        cursor = con.cursor()
+
+        cursor.execute(f"INSERT INTO `todosah` (`description`) VALUES ('{newTodo}')")
+
+        cursor.close()
+
+        con.commit()
 
 
     #for todosDescripton in results:
@@ -51,6 +61,14 @@ def index():
 @app.route("/delete/<int:todoIndex>", methods = ["POST"])
 def todoDel(todoIndex):
 
-    del todolist[todoIndex]
+        cursor = con.cursor()
 
-    return redirect("/")
+        cursor.execute(f"DELETE FROM `todosah` WHERE ('id = {todoIndex}')")
+
+        cursor.close()
+
+        con.commit()
+
+        # del todolist[todoIndex]
+
+        return redirect("/")

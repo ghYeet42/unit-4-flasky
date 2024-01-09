@@ -62,8 +62,8 @@
         <ul class="">
             {% for todo in my2dolist %}
                 <li>
-                    {{todo}}
-                    <form method="post" action="/delete/{{loop.index0}}">
+                    {{todo["description"]}}
+                    <form method="post" action="/delete/{{todo['id']}}">
                         <input type="submit" value="Delete" class="button">
                     </form>
                 </li>
