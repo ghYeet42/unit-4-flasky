@@ -1,10 +1,10 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, jsonify
 import pymysql
 import pymysql.cursors
 from pprint import pprint as print
 
 
-con = pymysql.connect(
+con = pymysql.connect (
     database = "cscarlett_todosah",
     user = "cscarlett",
     password = "228941274",
@@ -23,16 +23,6 @@ app = Flask(__name__)
 @app.route("/", methods = ["GET", "POST"])
 def index():
 
-    cursor = con.cursor()
-
-    cursor.execute("SELECT * FROM `todosah`")
-
-    results = cursor.fetchall()
-
-    cursor.close()
-
-    print(results)
-
     if request.method == "POST":
 
         newTodo = request.form["new2do"]
@@ -48,8 +38,13 @@ def index():
         con.commit()
 
 
-    #for todosDescripton in results:
-    #    print(todosDescripton...)
+    cursor = con.cursor()
+
+    cursor.execute("SELECT * FROM `todosah` ORDER BY `complete`")
+
+    results = cursor.fetchall()
+
+    cursor.close()
 
     return render_template ("todo.html.jinja", my2dolist = results)
     
@@ -57,18 +52,31 @@ def index():
 
     # return ("<p style=\"color:red;\">Hello!</p>")
 
+@app.route("/completedTodo/<int:todoIndex>", methods = ["POST"])
+def todoCompleted(todoIndex):
+     
+    cursor = con.cursor()
+
+    cursor.execute(f"UPDATE `todosah` SET `complete` = 1 WHERE `id` = {todoIndex}")
+
+    cursor.close()
+
+    con.commit()
+
+
+    return redirect("/")
+
 
 @app.route("/delete/<int:todoIndex>", methods = ["POST"])
 def todoDel(todoIndex):
+    cursor = con.cursor()
 
-        cursor = con.cursor()
+    cursor.execute(f"DELETE FROM `todosah` WHERE `id` = {todoIndex}")
 
-        cursor.execute(f"DELETE FROM `todosah` WHERE ('id = {todoIndex}')")
+    cursor.close()
 
-        cursor.close()
+    con.commit()
 
-        con.commit()
+    # del todolist[todoIndex]
 
-        # del todolist[todoIndex]
-
-        return redirect("/")
+    return redirect("/")

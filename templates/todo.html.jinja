@@ -4,6 +4,8 @@
 
     <head>
 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
         <style>
         
             body {
@@ -47,6 +49,11 @@
                 font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
             }
 
+            .completed {
+                text-decoration: line-through;
+                font-style: italic;
+            }
+
         </style>
 
         <title>money</title>
@@ -59,15 +66,35 @@
 
         <h1>My Todos</h1>
 
-        <ul class="">
+        <ul>
+
             {% for todo in my2dolist %}
-                <li>
+
+                <li class="{% if todo['complete'] %} complete {% endif %}">
+
                     {{todo["description"]}}
-                    <form method="post" action="/delete/{{todo['id']}}">
-                        <input type="submit" value="Delete" class="button">
-                    </form>
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    
+                        <form method="post" action="/delete/{{todo['id']}}">
+                            <input type="submit" value="Delete" class="btn btn-primary me-md-2">
+                        </form>
+
+                        <form method="post" action="/completedTodo/{{todo['id']}}">   
+                            <input type="submit" value="Mark Complete" class="btn btn-success">
+                        </form>
+
+                    </div>
+
+
+                    {% if todo["complete"]%}
+                    ✅
+                    {% endif %}
+
                 </li>
+
             {% endfor %}
+
         </ul>
 
         <form method="post">
@@ -80,13 +107,13 @@
 
         <hr>
 
-        <p><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR99rvsuG0cbLgsI_Grvmb0z1jsf7r4nV6qbnwHfB4gWg&s"></p>
+        <p><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR99rvsuG0cbLgsI_Grvmb0z1jsf7r4nV6qbnwHfB4gWg&s" class="img-fluid"></p>
 
-        <p><img src="https://www.micro-scooters.co.uk/static/cms/media/Stunt-3.jpg"></p>
+        <p><img src="https://www.micro-scooters.co.uk/static/cms/media/Stunt-3.jpg" class="img-fluid"></p>
 
-        <p><img src="https://corporate.mcdonalds.com/content/dam/sites/corp/nfl/newsroom/9839_BaconEggCheeseMcGriddle.uuid%20(1).png"></p>
+        <p><img src="https://corporate.mcdonalds.com/content/dam/sites/corp/nfl/newsroom/9839_BaconEggCheeseMcGriddle.uuid%20(1).png" class="img-fluid"></p>
 
-        <p><img src="https://gifdb.com/images/high/justin-jefferson-griddy-498-x-280-gif-0yxj83354skz050s.gif"></p>
+        <p><img src="https://gifdb.com/images/high/justin-jefferson-griddy-498-x-280-gif-0yxj83354skz050s.gif" class="img-fluid"></p>
 
         <p>wasggggg1</p>
 
