@@ -75,15 +75,16 @@
                     {{todo["description"]}}
 
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    
+
                         <form method="post" action="/delete/{{todo['id']}}">
                             <input type="submit" value="Delete" class="btn btn-primary me-md-2">
                         </form>
 
-                        <form method="post" action="/completedTodo/{{todo['id']}}">   
-                            <input type="submit" value="Mark Complete" class="btn btn-success">
-                        </form>
-
+                        {% if todo["complete"]==0%}
+                            <form method="post" action="/completedTodo/{{todo['id']}}">   
+                                <input type="submit" value="Mark Complete" class="btn btn-success">
+                            </form>
+                        {% endif %}
                     </div>
 
 
